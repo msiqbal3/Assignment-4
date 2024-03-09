@@ -4,7 +4,7 @@
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Shahman Iqbal  Student ID: msiqbal3  Date: 08-03-2024
+*  Name: Muhammad Shahman Iqbal  Student ID: 136212230  Date: 08-03-2024
 *
 *  Online (Cycliic) Link: https://amaranth-moth-gown.cyclic.app
 *
@@ -43,6 +43,17 @@ collegeData.initialize()
         .catch(() => res.json({ message: "no results" }));
     });
 
+    app.get("/students/course", (req, res) => {
+      const course = req.query.course;
+      if (!course) {
+        res.status(400).json({ message: "Course parameter is required" });
+        return;
+      }
+      
+      collegeData.getStudentsByCourse(course)
+        .then(students => res.json(students))
+        .catch(() => res.status(500).json({ message: "No students found for the given course" }));
+    });
     app.get("/student/:num", (req, res) => {
       const num = req.params.num;
       collegeData.getStudentByNum(num)
